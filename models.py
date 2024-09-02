@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime, UniqueConstraint
 from sqlalchemy.orm import relationship
 try:
     from .database import Base
@@ -20,13 +20,14 @@ class Service(Base):
     __tablename__ = "service"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, unique=True, index=True)
+    name = Column(String, index=True)
     description = Column(String, index=True)
     archive_path = Column(String, unique=True, index=True)
     source_path = Column(String, unique=True, index=True)
     application_id = Column(Integer, ForeignKey("application.id"))
 
     application = relationship("Application", back_populates="services")
+    __table_args__ = (UniqueConstraint(name, application_id, name="uq_service"),)
 
 
 class LogChunks(Base):

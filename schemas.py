@@ -47,3 +47,6 @@ class get_chunk_query(BaseModel):
     service_id: int
     start_time: datetime
     end_time: datetime | None = None
+
+class Path(BaseModel):
+    path: str

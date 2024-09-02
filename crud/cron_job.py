@@ -25,7 +25,7 @@ def update_job_scheduled_execution_time(db: Session, job: models.cron_jobs, next
     return True
 
 def delete_job(db: Session, service_ids: schemas.entity) -> bool:
-    for id in service_ids.ids:
+    for id in service_ids:
         stmt = delete(models.cron_jobs).where(models.cron_jobs.id==id)
         db.execute(stmt)
         db.commit()

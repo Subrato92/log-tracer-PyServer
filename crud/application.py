@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import delete
 import logging
 
 logger = logging.getLogger(__name__)
@@ -27,3 +28,9 @@ def addApplication(db: Session, application: schemas.ApplicationBase):
     db.commit()
     db.refresh(db_application)
     return db_application
+
+def delete_application(db: Session, application_id: int) -> bool:
+    stmt = delete(models.Application).where(models.Application.id==application_id)
+    db.execute(stmt)
+    db.commit()
+    return True

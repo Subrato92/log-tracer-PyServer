@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from sqlalchemy import delete
 import logging
 
 logger = logging.getLogger(__name__)
@@ -35,3 +36,11 @@ def create_service(db: Session, serviceBase: schemas.ServiceCreate, applicationN
     db.refresh(db_service)
 
     return db_service
+
+def delete_services(db: Session, service_ids: schemas.entity) -> bool:
+    for id in service_ids:
+        stmt = delete(models.Service).where(models.Service.id==id)
+        db.execute(stmt)
+        db.commit()
+
+    return True

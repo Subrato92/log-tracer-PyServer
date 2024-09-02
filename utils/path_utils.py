@@ -30,8 +30,8 @@ def removeSpace(s):
 def makeDir(path):
     resp = True
     try:  
-        mode = 0o666
-        os.makedirs(path, mode)
+        mode = 0o777
+        os.makedirs(path, mode, exist_ok=True)
         logger.info("Success - created dir -> "+path)  
     except OSError as error:  
         logger.error(error) 
